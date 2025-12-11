@@ -82,7 +82,7 @@ function Header({ onBookConsultation }: HeaderProps) {
             <div className="w-8 h-8 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center">
               <Mic className="w-4 h-4 text-white" />
             </div>
-            <span className="font-semibold text-lg text-foreground" data-testid="text-logo">lokelai</span>
+            <span className="font-semibold text-lg text-foreground" data-testid="text-logo">Lokelai</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#demo" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-demo">Demo</a>
@@ -553,7 +553,7 @@ function Footer({ onContact }: FooterProps) {
               <div className="w-8 h-8 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center">
                 <Mic className="w-4 h-4 text-white" />
               </div>
-              <span className="font-semibold text-lg text-foreground">lokelai</span>
+              <span className="font-semibold text-lg text-foreground">Lokelai</span>
             </div>
             <p className="text-muted-foreground max-w-sm mb-4">
               Your trusted partner for AI-powered voice agents and avatars. 
@@ -568,8 +568,8 @@ function Footer({ onContact }: FooterProps) {
             <h3 className="font-semibold text-foreground mb-4">Contact</h3>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <a href="mailto:hello@lokelai.eu" className="hover:text-foreground transition-colors" data-testid="text-footer-email">
-                  hello@lokelai.eu
+                <a href="mailto:hello@Lokelai.eu" className="hover:text-foreground transition-colors" data-testid="text-footer-email">
+                  hello@Lokelai.eu
                 </a>
               </li>
               <li data-testid="text-footer-phone">+34 XXX XXX XXX</li>
@@ -610,7 +610,7 @@ function Footer({ onContact }: FooterProps) {
         
         <div className="mt-12 pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground" data-testid="text-copyright">
-            &copy; 2024 lokelai - Built in EU
+            &copy; 2024 Lokelai - Built in EU
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors" data-testid="link-privacy">Privacy Policy</a>
