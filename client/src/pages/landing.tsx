@@ -447,9 +447,9 @@ function HowItWorksSection() {
         </motion.div>
         
         <div className="relative">
-          <div className="hidden lg:block absolute top-24 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-primary/20 via-accent/40 to-primary/20 rounded-full" />
+          <div className="hidden md:block absolute top-24 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-primary/20 via-accent/40 to-primary/20 rounded-full" />
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
