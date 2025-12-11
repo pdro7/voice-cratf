@@ -522,6 +522,7 @@ function Footer() {
                 href="#" 
                 className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
                 data-testid="link-linkedin"
+                aria-label="Follow us on LinkedIn"
               >
                 <SiLinkedin className="w-5 h-5" />
               </a>
@@ -529,6 +530,7 @@ function Footer() {
                 href="#" 
                 className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
                 data-testid="link-twitter"
+                aria-label="Follow us on X"
               >
                 <SiX className="w-5 h-5" />
               </a>
@@ -536,6 +538,7 @@ function Footer() {
                 href="#" 
                 className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
                 data-testid="link-facebook"
+                aria-label="Follow us on Facebook"
               >
                 <SiFacebook className="w-5 h-5" />
               </a>
