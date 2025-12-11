@@ -18,7 +18,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="lokelia-theme">
+    <ThemeProvider defaultTheme="light" storageKey="lokelai-theme">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
