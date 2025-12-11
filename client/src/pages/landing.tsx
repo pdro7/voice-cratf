@@ -26,6 +26,7 @@ import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
 import heroImage from "@assets/generated_images/ai_avatar_hologram_hero_image.png";
+import konverxaLogo from "@assets/konverxa-logo_1765466926990.png";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -80,9 +81,7 @@ function Header({ onBookConsultation }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <Mic className="w-4 h-4 text-white" />
-            </div>
+            <img src={konverxaLogo} alt="Konverxa" className="h-8 w-auto" data-testid="img-logo" />
             <span className="font-semibold text-lg text-foreground" data-testid="text-logo">Konverxa</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -566,9 +565,7 @@ function Footer({ onContact }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-md bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Mic className="w-4 h-4 text-white" />
-              </div>
+              <img src={konverxaLogo} alt="Konverxa" className="h-8 w-auto" />
               <span className="font-semibold text-lg text-foreground">Konverxa</span>
             </div>
             <p className="text-muted-foreground max-w-sm mb-4">
