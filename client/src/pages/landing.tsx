@@ -25,6 +25,7 @@ import {
 import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
+import heroImage from "@assets/generated_images/ai_avatar_hologram_hero_image.png";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -185,6 +186,21 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" />
               <span data-testid="text-trust-eu">Built in EU</span>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            className="mt-16"
+            variants={fadeInUp}
+          >
+            <div className="relative max-w-4xl mx-auto">
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-50" />
+              <img 
+                src={heroImage} 
+                alt="AI Voice Agent Avatar" 
+                className="relative w-full rounded-xl shadow-2xl border border-border/50"
+                data-testid="img-hero"
+              />
             </div>
           </motion.div>
         </motion.div>
