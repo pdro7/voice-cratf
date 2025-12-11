@@ -1,0 +1,63 @@
+Create a modern, elegant landing page for an AI voice agent and avatar service.
+
+DESIGN STYLE:
+- Color palette: Deep Navy (#0f172a) for text, Soft White (#fafafa) background, Electric Blue (#3b82f6) for CTAs, Subtle Purple (#8b5cf6) for accents, Light Gray (#f1f5f9) for section backgrounds
+- Typography: Clean sans-serif font (Inter or similar), generous spacing, modern and elegant
+- Visual style: Smooth gradients (navy to purple, subtle), soft shadows, rounded corners (8-12px), glass-morphism effects on cards
+- Layout: Generous white space, clean and sophisticated, premium SaaS feel (think Stripe or Linear)
+
+HERO SECTION:
+- Headline: "Your 24/7 AI Receptionist That Never Takes a Break"
+- Subheadline: "AI voice agents and avatars that handle customer calls, book appointments, and answer questions around the clock - while you focus on growing your business."
+- Two CTA buttons: 
+  * Primary "Try Our Demo Agent" (electric blue, bold)
+  * Secondary "Book a Free Consultation" (outlined, navy text)
+- Trust line below: "Serving businesses across Europe • GDPR Compliant • Built in EU" (small, gray text)
+- Hero image: Modern AI/technology visual or abstract gradient background
+- Full-width section with centered content
+
+DEMO SECTION (light gray background):
+- Heading: "Experience It Yourself"
+- Large phone number display: "+34 XXX XXX XXX" (make it prominent and clickable)
+- Subtext: "Call now and talk to our AI agent - see how natural it sounds"
+- Video embed placeholder or interactive demo area
+- Card-style layout with soft shadow
+
+SERVICES SECTION (3 equal columns with cards):
+Each card with icon, heading, and description:
+1. 🎙️ Voice Agents
+   "Answer calls, book appointments, qualify leads - automatically"
+2. 👤 AI Avatars
+   "Training videos, customer support, course instructors"
+3. 🔄 Smart Automation
+   "Connect to your calendar, CRM, and existing tools"
+- Cards with glass-morphism effect, hover animations
+- Purple accent on hover
+
+USE CASES SECTION (light gray background):
+- Heading: "Who We Help"
+- 4 use case cards in 2x2 grid:
+  * Healthcare practices - Never miss patient calls
+  * Real estate agents - Handle property inquiries 24/7
+  * Professional services - Always available for clients
+  * Online educators - Scale your teaching
+- Each with icon and brief description
+
+HOW IT WORKS SECTION (3 steps, horizontal timeline):
+1. Discovery Call - "We understand your needs"
+2. Build & Test - "Custom AI agent for your business"
+3. Launch & Optimize - "Go live and improve continuously"
+- Timeline connector line with purple gradient
+
+CTA SECTION (navy background with gradient):
+- White text
+- Headline: "Ready to Never Miss a Customer Again?"
+- Large CTA button: "Get Started Today"
+- Secondary: "Schedule Free Demo"
+
+FOOTER (simple, navy text):
+- Contact info placeholder
+- Social links placeholder
+- "© 2024 - Built in EU"
+
+Mobile responsive, smooth scroll animations, modern interactions.
