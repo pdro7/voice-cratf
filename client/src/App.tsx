@@ -18,7 +18,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="lokelai-theme">
+    <ThemeProvider defaultTheme="light" storageKey="konverxa-theme">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
