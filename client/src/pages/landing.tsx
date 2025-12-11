@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -22,6 +23,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
+import { ContactFormModal } from "@/components/contact-form-modal";
+import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -38,23 +41,39 @@ const staggerContainer = {
 };
 
 export default function Landing() {
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header onBookConsultation={() => setDemoModalOpen(true)} />
       <main>
-        <HeroSection />
+        <HeroSection 
+          onTryDemo={() => setContactModalOpen(true)} 
+          onBookConsultation={() => setDemoModalOpen(true)} 
+        />
         <DemoSection />
         <ServicesSection />
         <UseCasesSection />
         <HowItWorksSection />
-        <CTASection />
+        <CTASection 
+          onGetStarted={() => setContactModalOpen(true)} 
+          onScheduleDemo={() => setDemoModalOpen(true)} 
+        />
       </main>
-      <Footer />
+      <Footer onContact={() => setContactModalOpen(true)} />
+      
+      <ContactFormModal open={contactModalOpen} onOpenChange={setContactModalOpen} />
+      <DemoSchedulingModal open={demoModalOpen} onOpenChange={setDemoModalOpen} />
     </div>
   );
 }
 
-function Header() {
+interface HeaderProps {
+  onBookConsultation: () => void;
+}
+
+function Header({ onBookConsultation }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,7 +92,12 @@ function Header() {
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="outline" size="sm" data-testid="button-book-consultation-header">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={onBookConsultation}
+              data-testid="button-book-consultation-header"
+            >
               Book Consultation
             </Button>
           </div>
@@ -83,7 +107,12 @@ function Header() {
   );
 }
 
-function HeroSection() {
+interface HeroSectionProps {
+  onTryDemo: () => void;
+  onBookConsultation: () => void;
+}
+
+function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
@@ -121,11 +150,22 @@ function HeroSection() {
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
             variants={fadeInUp}
           >
-            <Button size="lg" className="w-full sm:w-auto text-base px-8" data-testid="button-try-demo">
+            <Button 
+              size="lg" 
+              className="w-full sm:w-auto text-base px-8" 
+              onClick={onTryDemo}
+              data-testid="button-try-demo"
+            >
               Try Our Demo Agent
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto text-base px-8" data-testid="button-book-consultation">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full sm:w-auto text-base px-8" 
+              onClick={onBookConsultation}
+              data-testid="button-book-consultation"
+            >
               Book a Free Consultation
             </Button>
           </motion.div>
@@ -444,7 +484,12 @@ function HowItWorksSection() {
   );
 }
 
-function CTASection() {
+interface CTASectionProps {
+  onGetStarted: () => void;
+  onScheduleDemo: () => void;
+}
+
+function CTASection({ onGetStarted, onScheduleDemo }: CTASectionProps) {
   return (
     <section className="py-20 lg:py-28 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10" />
@@ -469,7 +514,12 @@ function CTASection() {
           </p>
           
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="w-full sm:w-auto text-base px-8" data-testid="button-get-started">
+            <Button 
+              size="lg" 
+              className="w-full sm:w-auto text-base px-8" 
+              onClick={onGetStarted}
+              data-testid="button-get-started"
+            >
               Get Started Today
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
@@ -477,6 +527,7 @@ function CTASection() {
               variant="outline" 
               size="lg" 
               className="w-full sm:w-auto text-base px-8 bg-white/5 border-white/20 text-white hover:bg-white/10"
+              onClick={onScheduleDemo}
               data-testid="button-schedule-demo"
             >
               Schedule Free Demo
@@ -488,7 +539,11 @@ function CTASection() {
   );
 }
 
-function Footer() {
+interface FooterProps {
+  onContact: () => void;
+}
+
+function Footer({ onContact }: FooterProps) {
   return (
     <footer className="py-12 bg-muted/30 border-t border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -500,16 +555,23 @@ function Footer() {
               </div>
               <span className="font-semibold text-lg text-foreground">VoiceAI</span>
             </div>
-            <p className="text-muted-foreground max-w-sm">
+            <p className="text-muted-foreground max-w-sm mb-4">
               Your trusted partner for AI-powered voice agents and avatars. 
               Serving businesses across Europe with GDPR-compliant solutions.
             </p>
+            <Button variant="outline" size="sm" onClick={onContact} data-testid="button-footer-contact">
+              Contact Us
+            </Button>
           </div>
           
           <div>
             <h3 className="font-semibold text-foreground mb-4">Contact</h3>
             <ul className="space-y-2 text-muted-foreground">
-              <li data-testid="text-footer-email">hello@voiceai.eu</li>
+              <li>
+                <a href="mailto:hello@voiceai.eu" className="hover:text-foreground transition-colors" data-testid="text-footer-email">
+                  hello@voiceai.eu
+                </a>
+              </li>
               <li data-testid="text-footer-phone">+34 XXX XXX XXX</li>
               <li data-testid="text-footer-location">Barcelona, Spain</li>
             </ul>
