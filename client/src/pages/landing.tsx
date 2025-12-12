@@ -29,7 +29,7 @@ import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
 import { ElevenLabsAgent } from "@/components/elevenlabs-agent";
-import heroImage from "@assets/freepik__create-an-image-similar-to-img1-a-futuristic-digit___1765523398341.jpeg";
+import heroVideo from "@assets/Intro_1765557745443.mp4";
 import konverxaLogo from "@assets/konverxa-logo_1765466926990.png";
 
 const fadeInUp = {
@@ -197,11 +197,14 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
           >
             <div className="relative max-w-4xl mx-auto">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-50" />
-              <img 
-                src={heroImage} 
-                alt="AI Voice Agent Avatar" 
+              <video 
+                src={heroVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="relative w-full rounded-xl shadow-2xl border border-border/50"
-                data-testid="img-hero"
+                data-testid="video-hero"
               />
             </div>
           </motion.div>
