@@ -202,7 +202,6 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
                 src={heroVideo}
                 poster={videoPoster}
                 controls
-                loop
                 playsInline
                 className="relative w-full rounded-xl shadow-2xl border border-border/50"
                 data-testid="video-hero"
