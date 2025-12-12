@@ -30,6 +30,7 @@ import { ContactFormModal } from "@/components/contact-form-modal";
 import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
 import { ElevenLabsAgent } from "@/components/elevenlabs-agent";
 import heroVideo from "@assets/Intro_1765557745443.mp4";
+import videoPoster from "@assets/cover_intro_image_1765557992555.png";
 import konverxaLogo from "@assets/konverxa-logo_1765466926990.png";
 
 const fadeInUp = {
@@ -199,6 +200,7 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-50" />
               <video 
                 src={heroVideo}
+                poster={videoPoster}
                 controls
                 loop
                 playsInline
