@@ -24,6 +24,7 @@ import {
   PiggyBank,
   TrendingUp,
   Zap,
+  Link2,
 } from "lucide-react";
 import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
@@ -369,6 +370,16 @@ function BenefitsSection() {
       title: "Scale Effortlessly",
       description: "Handle 1 call or 1,000 simultaneously. Grow your business without growing overhead.",
     },
+    {
+      icon: Globe,
+      title: "Multilingual Support",
+      description: "Serve customers across Europe in their native language - German, English, Spanish, French, and more.",
+    },
+    {
+      icon: Link2,
+      title: "Seamless Integration",
+      description: "Connects instantly with your calendar, CRM, booking system, and existing business tools.",
+    },
   ];
 
   return (
@@ -386,7 +397,7 @@ function BenefitsSection() {
           </h2>
         </motion.div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.title}
