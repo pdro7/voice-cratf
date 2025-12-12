@@ -21,6 +21,9 @@ import {
   Globe,
   Shield,
   MapPin,
+  PiggyBank,
+  TrendingUp,
+  Zap,
 } from "lucide-react";
 import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
@@ -56,7 +59,7 @@ export default function Landing() {
         />
         <DemoSection />
         <ServicesSection />
-        <UseCasesSection />
+        <BenefitsSection />
         <HowItWorksSection />
         <CTASection 
           onGetStarted={() => setContactModalOpen(true)} 
@@ -344,32 +347,32 @@ function ServicesSection() {
   );
 }
 
-function UseCasesSection() {
-  const useCases = [
+function BenefitsSection() {
+  const benefits = [
     {
-      icon: Building2,
-      title: "Healthcare Practices",
-      description: "Never miss patient calls",
+      icon: Phone,
+      title: "Never Miss Revenue",
+      description: "Capture every opportunity - even at 3 AM. Our AI agents answer every call, every time.",
     },
     {
-      icon: Home,
-      title: "Real Estate Agents",
-      description: "Handle property inquiries 24/7",
+      icon: Zap,
+      title: "Instant Response Time",
+      description: "No hold music, no voicemail. Customers get answers immediately, boosting satisfaction and conversions.",
     },
     {
-      icon: Briefcase,
-      title: "Professional Services",
-      description: "Always available for clients",
+      icon: PiggyBank,
+      title: "Save Time & Money",
+      description: "One AI agent costs less than hiring reception staff, works 24/7, and never takes a sick day.",
     },
     {
-      icon: GraduationCap,
-      title: "Online Educators",
-      description: "Scale your teaching",
+      icon: TrendingUp,
+      title: "Scale Effortlessly",
+      description: "Handle 1 call or 1,000 simultaneously. Grow your business without growing overhead.",
     },
   ];
 
   return (
-    <section id="use-cases" className="py-20 lg:py-28 bg-muted/50">
+    <section id="benefits" className="py-20 lg:py-28 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
@@ -378,39 +381,35 @@ function UseCasesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground" data-testid="text-use-cases-heading">
-            Who We Help
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground" data-testid="text-benefits-heading">
+            Why Businesses Choose Konverxa
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Trusted by businesses across diverse industries
-          </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
-          {useCases.map((useCase, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          {benefits.map((benefit, index) => (
             <motion.div
-              key={useCase.title}
+              key={benefit.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card 
-                className="group h-full overflow-visible bg-card/80 backdrop-blur-sm border-border/50 hover-elevate transition-all duration-300"
-                data-testid={`card-use-case-${index}`}
+                className="group h-full overflow-visible relative bg-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300"
+                data-testid={`card-benefit-${index}`}
               >
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center shrink-0 group-hover:from-primary/20 group-hover:to-accent/20 transition-colors">
-                    <useCase.icon className="w-6 h-6 text-primary" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/60 rounded-t-md" />
+                <CardContent className="p-6 pt-8">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center mb-4 group-hover:from-primary/20 group-hover:to-primary/10 transition-colors">
+                    <benefit.icon className="w-7 h-7 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1" data-testid={`text-use-case-title-${index}`}>
-                      {useCase.title}
-                    </h3>
-                    <p className="text-muted-foreground" data-testid={`text-use-case-description-${index}`}>
-                      {useCase.description}
-                    </p>
-                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2" data-testid={`text-benefit-title-${index}`}>
+                    {benefit.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed" data-testid={`text-benefit-description-${index}`}>
+                    {benefit.description}
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>
