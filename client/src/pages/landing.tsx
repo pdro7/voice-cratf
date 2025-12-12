@@ -8,7 +8,6 @@ import {
   User,
   RefreshCw,
   Phone,
-  Play,
   Building2,
   Home,
   Briefcase,
@@ -60,7 +59,6 @@ export default function Landing() {
           onTryDemo={() => setVoiceAgentOpen(true)} 
           onBookConsultation={() => setDemoModalOpen(true)} 
         />
-        <DemoSection />
         <ServicesSection />
         <BenefitsSection />
         <HowItWorksSection />
@@ -92,9 +90,8 @@ function Header({ onBookConsultation }: HeaderProps) {
             <span className="font-semibold text-lg text-foreground" data-testid="text-logo">Konverxa</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#demo" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-demo">Demo</a>
             <a href="#services" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-services">Services</a>
-            <a href="#use-cases" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-use-cases">Use Cases</a>
+            <a href="#benefits" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-benefits">Benefits</a>
             <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-how-it-works">How It Works</a>
           </nav>
           <div className="flex items-center gap-2">
@@ -209,71 +206,6 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
               />
             </div>
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function DemoSection() {
-  return (
-    <section id="demo" className="py-20 lg:py-28 bg-muted/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground" data-testid="text-demo-heading">
-            Experience It Yourself
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Call now and talk to our AI agent - see how natural it sounds
-          </p>
-        </motion.div>
-        
-        <motion.div 
-          className="max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <Card className="relative overflow-visible bg-card/80 backdrop-blur-sm border-border/50">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-30" />
-            <CardContent className="relative p-8 sm:p-12">
-              <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-6">
-                  <Phone className="w-10 h-10 text-white" />
-                </div>
-                
-                <a 
-                  href="tel:+34XXXXXXXXX" 
-                  className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground hover:text-primary transition-colors"
-                  data-testid="link-phone-number"
-                >
-                  +34 XXX XXX XXX
-                </a>
-                
-                <p className="mt-4 text-muted-foreground">
-                  Available 24/7 in multiple languages
-                </p>
-                
-                <div className="mt-8 w-full">
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center border border-border/50">
-                    <div className="text-center">
-                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                        <Play className="w-8 h-8 text-primary ml-1" />
-                      </div>
-                      <p className="text-muted-foreground" data-testid="text-video-placeholder">Watch Demo Video</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </motion.div>
       </div>
     </section>
