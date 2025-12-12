@@ -29,6 +29,7 @@ import {
 import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
+import { ElevenLabsAgent } from "@/components/elevenlabs-agent";
 import heroImage from "@assets/freepik__create-an-image-similar-to-img1-a-futuristic-digit___1765523398341.jpeg";
 import konverxaLogo from "@assets/konverxa-logo_1765466926990.png";
 
@@ -49,13 +50,14 @@ const staggerContainer = {
 export default function Landing() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [voiceAgentOpen, setVoiceAgentOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
       <Header onBookConsultation={() => setDemoModalOpen(true)} />
       <main>
         <HeroSection 
-          onTryDemo={() => setContactModalOpen(true)} 
+          onTryDemo={() => setVoiceAgentOpen(true)} 
           onBookConsultation={() => setDemoModalOpen(true)} 
         />
         <DemoSection />
@@ -71,6 +73,7 @@ export default function Landing() {
       
       <ContactFormModal open={contactModalOpen} onOpenChange={setContactModalOpen} />
       <DemoSchedulingModal open={demoModalOpen} onOpenChange={setDemoModalOpen} />
+      <ElevenLabsAgent open={voiceAgentOpen} onOpenChange={setVoiceAgentOpen} />
     </div>
   );
 }
