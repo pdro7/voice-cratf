@@ -135,7 +135,7 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
             variants={fadeInUp}
             data-testid="text-hero-headline"
           >
-            Your 24/7 AI Receptionist That{" "}
+            Your 24/7 AI receptionist that{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Never Takes a Break
             </span>
@@ -146,8 +146,7 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
             variants={fadeInUp}
             data-testid="text-hero-subheadline"
           >
-            AI voice agents and avatars that handle customer calls, book appointments, 
-            and answer questions around the clock - while you focus on growing your business.
+            Never miss a call. Never lose a customer.
           </motion.p>
           
           <motion.div 
