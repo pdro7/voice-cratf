@@ -25,7 +25,7 @@ import {
 import { SiLinkedin, SiX, SiFacebook } from "react-icons/si";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { DemoSchedulingModal } from "@/components/demo-scheduling-modal";
-import heroImage from "@assets/Building-AI-Voice-Agents_1765470890201.png";
+import heroImage from "@assets/freepik__create-an-image-similar-to-img1-a-futuristic-digit___1765523025674.jpeg";
 import konverxaLogo from "@assets/konverxa-logo_1765466926990.png";
 
 const fadeInUp = {
