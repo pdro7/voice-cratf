@@ -199,9 +199,8 @@ function HeroSection({ onTryDemo, onBookConsultation }: HeroSectionProps) {
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-50" />
               <video 
                 src={heroVideo}
-                autoPlay
+                controls
                 loop
-                muted
                 playsInline
                 className="relative w-full rounded-xl shadow-2xl border border-border/50"
                 data-testid="video-hero"
