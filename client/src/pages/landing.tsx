@@ -46,25 +46,6 @@ const staggerContainer = {
   }
 };
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'elevenlabs-convai': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        'agent-id': string;
-      }, HTMLElement>;
-    }
-  }
-}
-
-const ELEVENLABS_AGENT_ID = "agent_0601kbfjez74e6n9gtw65apy53x5";
-
-function openElevenLabsWidget() {
-  const widget = document.querySelector('elevenlabs-convai');
-  if (widget) {
-    (widget as HTMLElement).click();
-  }
-}
-
 export default function Landing() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
@@ -74,7 +55,7 @@ export default function Landing() {
       <Header onBookConsultation={() => setDemoModalOpen(true)} />
       <main>
         <HeroSection 
-          onTryDemo={openElevenLabsWidget} 
+          onTryDemo={() => setContactModalOpen(true)} 
           onBookConsultation={() => setDemoModalOpen(true)} 
         />
         <DemoSection />
@@ -90,8 +71,6 @@ export default function Landing() {
       
       <ContactFormModal open={contactModalOpen} onOpenChange={setContactModalOpen} />
       <DemoSchedulingModal open={demoModalOpen} onOpenChange={setDemoModalOpen} />
-      
-      <elevenlabs-convai agent-id={ELEVENLABS_AGENT_ID}></elevenlabs-convai>
     </div>
   );
 }
