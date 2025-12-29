@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Phone, PhoneOff, Mic, MicOff } from "lucide-react";
 
-const AGENT_ID = "agent_0601kbfjez74e6n9gtw65apy53x5";
+const AGENT_ID = "agent_1301kc9qseaxeh9s1pxqvgdcbp3p";
 
 interface ElevenLabsAgentProps {
   open: boolean;
