@@ -1,6 +1,6 @@
 # Konverxa — AI Voice Agent Platform
 
-Konverxa is a full-stack marketing site and live demo for an AI voice receptionist service targeting European SMBs. Visitors can speak directly with a conversational AI agent that qualifies leads, answers questions about the product, and captures contact information — all in real time.
+Konverxa is live demo site for an AI voice receptionist service targeting European SMBs. Visitors can speak directly with a conversational AI agent that qualifies leads, answers questions about the product, and captures contact information — all in real time.
 
 Built as a portfolio project to demonstrate production-grade integration of the [ElevenLabs Conversational AI](https://elevenlabs.io/conversational-ai) platform.
 
