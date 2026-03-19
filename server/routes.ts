@@ -9,7 +9,28 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  
+
+  app.get("/api/agent-token", async (_req, res) => {
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    const agentId = process.env.ELEVENLABS_AGENT_ID;
+
+    if (!apiKey || !agentId) {
+      return res.status(500).json({ error: "ElevenLabs credentials not configured" });
+    }
+
+    try {
+      const response = await fetch(
+        `https://api.elevenlabs.io/v1/convai/conversation/get_signed_url?agent_id=${agentId}`,
+        { headers: { "xi-api-key": apiKey } }
+      );
+      const data = await response.json() as { signed_url: string };
+      res.json({ signedUrl: data.signed_url });
+    } catch (error) {
+      console.error("Failed to get agent token:", error);
+      res.status(500).json({ error: "Failed to get agent token" });
+    }
+  });
+
   app.post("/api/contact", async (req, res) => {
     try {
       const data = insertContactSchema.parse(req.body);

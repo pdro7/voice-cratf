@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/select";
 import { Phone, PhoneOff, Mic, MicOff, Mail } from "lucide-react";
 
-const AGENT_ID = "agent_1301kc9qseaxeh9s1pxqvgdcbp3p";
 
 const BUSINESS_TYPES = [
   { value: "restaurant", labelEs: "Restaurante / Hostelería", labelEn: "Restaurant / Hospitality" },
@@ -153,6 +152,10 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
+      const tokenRes = await fetch("/api/agent-token");
+      if (!tokenRes.ok) throw new Error("Failed to get agent token");
+      const { signedUrl } = await tokenRes.json();
+
       const selectedBusiness = BUSINESS_TYPES.find(
         (b) => b.value === form.businessType
       );
@@ -167,8 +170,8 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
           : `Hello ${form.name}! Thanks for calling Konverxa. I see you're in the ${businessLabel ?? form.businessType} sector — tell me, how are you currently handling your customer calls?`;
 
       await conversation.startSession({
-        agentId: AGENT_ID,
-        connectionType: "webrtc",
+        signedUrl,
+        connectionType: "websocket",
         dynamicVariables: {
           user_name: form.name,
           business_type: businessLabel ?? form.businessType,
