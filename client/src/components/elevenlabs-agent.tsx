@@ -60,6 +60,7 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
     },
     onDisconnect: () => {
       setIsConnecting(false);
+      setStep("form");
     },
     onError: (err) => {
       setError(typeof err === "string" ? err : "An error occurred");
