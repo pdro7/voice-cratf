@@ -127,7 +127,11 @@ Create a `.env` file:
 
 ```env
 DATABASE_URL=postgresql://user:password@host:5432/dbname
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+ELEVENLABS_AGENT_ID=your_agent_id
 ```
+
+> The `ELEVENLABS_API_KEY` requires **ElevenAgents → Write** permission. The Agent ID and API key are never sent to the client — the frontend requests an ephemeral signed URL from the backend before each session.
 
 Push the schema to your database:
 
@@ -169,3 +173,5 @@ And two **client tools**:
 **Email via UI, not voice** — Voice-to-text is unreliable for email addresses. Triggering a typed input from within the voice conversation (via a client tool that returns a Promise) solves this cleanly without breaking the conversational flow.
 
 **Client tools as integration points** — Both tools demonstrate how a voice agent can interact with external systems (databases, CRMs) in real time. The same pattern scales to calendar integrations, inventory lookups, or any API call an enterprise customer might need.
+
+**Signed URL authentication** — The Agent ID never reaches the browser. Before each session, the frontend requests an ephemeral signed URL from the backend, which generates it server-side using the ElevenLabs API key stored in environment variables. This prevents unauthorised use of the agent even if the source code is public.
