@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
 import helmet from "helmet";
 import { registerRoutes } from "./routes";
@@ -11,12 +12,13 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://elevenlabs.io"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://elevenlabs.io", "blob:"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "blob:"],
       mediaSrc: ["'self'", "blob:"],
-      connectSrc: ["'self'", "wss:", "https://api.elevenlabs.io", "https://elevenlabs.io"],
+      connectSrc: ["'self'", "wss:", "ws:", "https://*.elevenlabs.io", "https://elevenlabs.io", "https://*.livekit.cloud", "wss://*.livekit.cloud"],
+      workerSrc: ["'self'", "blob:"],
       frameSrc: ["'self'"],
     },
   },
@@ -103,14 +105,7 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || "5000", 10);
-  httpServer.listen(
-    {
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    },
-    () => {
-      log(`serving on port ${port}`);
-    },
-  );
+  httpServer.listen(port, () => {
+    log(`serving on port ${port}`);
+  });
 })();

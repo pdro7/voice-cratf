@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useConversation } from "@elevenlabs/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Phone, PhoneOff, Mic, MicOff } from "lucide-react";
+import { Phone, PhoneOff, Mic, MicOff, Mail } from "lucide-react";
 
 const AGENT_ID = "agent_1301kc9qseaxeh9s1pxqvgdcbp3p";
 
@@ -38,6 +38,11 @@ interface PreCallForm {
   language: "es" | "en";
 }
 
+interface PendingLead {
+  name: string;
+  phone: string;
+}
+
 interface ElevenLabsAgentProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -53,13 +58,55 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Email form state
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
+  const [pendingLead, setPendingLead] = useState<PendingLead>({ name: "", phone: "" });
+  const emailResolveRef = useRef<((result: string) => void) | null>(null);
+
+  // Use ref to always access latest form values inside clientTools
+  const formRef = useRef(form);
+  formRef.current = form;
+
   const conversation = useConversation({
+    clientTools: {
+      save_lead: async ({ name, email, phone }: { name: string; email: string; phone?: string }) => {
+        try {
+          const f = formRef.current;
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name,
+              email,
+              phone: phone ?? "",
+              company: f.businessType,
+              message: `Lead captured via voice agent demo. Business: ${f.businessType}`,
+            }),
+          });
+          if (res.ok) return "Lead saved successfully.";
+          return "There was an issue saving the information.";
+        } catch {
+          return "Failed to save lead.";
+        }
+      },
+      show_email_form: ({ name, phone }: { name?: string; phone?: string }) => {
+        setPendingLead({ name: name ?? formRef.current.name, phone: phone ?? "" });
+        setEmailInput("");
+        setShowEmailForm(true);
+        return new Promise<string>((resolve) => {
+          emailResolveRef.current = resolve;
+        });
+      },
+    },
     onConnect: () => {
       setIsConnecting(false);
       setError(null);
     },
     onDisconnect: () => {
       setIsConnecting(false);
+      setShowEmailForm(false);
       setStep("form");
     },
     onError: (err) => {
@@ -69,6 +116,35 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
   });
 
   const isConnected = conversation.status === "connected";
+
+  const handleEmailSubmit = useCallback(async () => {
+    if (!emailInput.trim()) return;
+    setEmailSubmitting(true);
+    try {
+      const f = formRef.current;
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: pendingLead.name,
+          email: emailInput.trim(),
+          phone: pendingLead.phone,
+          company: f.businessType,
+          message: `Lead captured via voice agent demo. Business: ${f.businessType}`,
+        }),
+      });
+      const result = res.ok ? "Lead saved successfully." : "Failed to save lead.";
+      setShowEmailForm(false);
+      emailResolveRef.current?.(result);
+      emailResolveRef.current = null;
+    } catch {
+      setShowEmailForm(false);
+      emailResolveRef.current?.("Failed to save lead.");
+      emailResolveRef.current = null;
+    } finally {
+      setEmailSubmitting(false);
+    }
+  }, [emailInput, pendingLead]);
 
   const startConversation = useCallback(async () => {
     setIsConnecting(true);
@@ -125,6 +201,7 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
         if (isConnected) await endConversation();
         setStep("form");
         setForm({ name: "", businessType: "", language: "es" });
+        setShowEmailForm(false);
         setError(null);
       }
       onOpenChange(newOpen);
@@ -133,24 +210,29 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
   );
 
   const isFormValid = form.name.trim().length > 0 && form.businessType !== "";
+  const isEs = form.language === "es";
 
   const t = {
-    title: form.language === "es" ? "Habla con nuestro Agente" : "Talk to our Agent",
-    description:
-      form.language === "es"
-        ? "Cuéntanos sobre tu negocio y descubre cómo un agente de voz puede ayudarte."
-        : "Tell us about your business and discover how a voice agent can help you.",
-    namePlaceholder: form.language === "es" ? "Tu nombre" : "Your name",
-    nameLabel: form.language === "es" ? "Nombre" : "Name",
-    businessLabel: form.language === "es" ? "Tipo de negocio" : "Business type",
-    businessPlaceholder:
-      form.language === "es" ? "Selecciona tu sector" : "Select your industry",
-    languageLabel: form.language === "es" ? "Idioma de la llamada" : "Call language",
-    startButton: form.language === "es" ? "Iniciar llamada" : "Start call",
-    connecting: form.language === "es" ? "Conectando..." : "Connecting...",
-    agentSpeaking: form.language === "es" ? "El agente está hablando..." : "Agent is speaking...",
-    listening: form.language === "es" ? "Escuchando..." : "Listening...",
-    endButton: form.language === "es" ? "Finalizar llamada" : "End call",
+    title: isEs ? "Habla con nuestro Agente" : "Talk to our Agent",
+    description: isEs
+      ? "Cuéntanos sobre tu negocio y descubre cómo un agente de voz puede ayudarte."
+      : "Tell us about your business and discover how a voice agent can help you.",
+    namePlaceholder: isEs ? "Tu nombre" : "Your name",
+    nameLabel: isEs ? "Nombre" : "Name",
+    businessLabel: isEs ? "Tipo de negocio" : "Business type",
+    businessPlaceholder: isEs ? "Selecciona tu sector" : "Select your industry",
+    languageLabel: isEs ? "Idioma de la llamada" : "Call language",
+    startButton: isEs ? "Iniciar llamada" : "Start call",
+    connecting: isEs ? "Conectando..." : "Connecting...",
+    agentSpeaking: isEs ? "El agente está hablando..." : "Agent is speaking...",
+    listening: isEs ? "Escuchando..." : "Listening...",
+    endButton: isEs ? "Finalizar llamada" : "End call",
+    emailTitle: isEs ? "Introduce tu email" : "Enter your email",
+    emailDescription: isEs
+      ? "El agente continúa mientras introduces tu correo."
+      : "The agent continues while you type your email.",
+    emailPlaceholder: isEs ? "tu@empresa.com" : "you@company.com",
+    emailSubmit: isEs ? "Confirmar" : "Confirm",
   };
 
   return (
@@ -165,7 +247,6 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
 
         {step === "form" ? (
           <div className="flex flex-col gap-5 py-2">
-            {/* Language selector */}
             <div className="flex flex-col gap-1.5">
               <Label>{t.languageLabel}</Label>
               <div className="flex gap-2">
@@ -188,7 +269,6 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
               </div>
             </div>
 
-            {/* Name */}
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="agent-name">{t.nameLabel}</Label>
               <Input
@@ -199,7 +279,6 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
               />
             </div>
 
-            {/* Business type */}
             <div className="flex flex-col gap-1.5">
               <Label>{t.businessLabel}</Label>
               <Select
@@ -241,39 +320,66 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center gap-6 py-8">
-            <div
-              className={`w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 ${
-                isConnected
-                  ? conversation.isSpeaking
-                    ? "bg-primary/20 ring-4 ring-primary/50 animate-pulse"
-                    : "bg-primary/10 ring-2 ring-primary/30"
-                  : "bg-muted"
-              }`}
-            >
-              {isConnected ? (
-                conversation.isSpeaking ? (
-                  <Mic className="w-12 h-12 text-primary animate-pulse" />
-                ) : (
-                  <MicOff className="w-12 h-12 text-muted-foreground" />
-                )
-              ) : (
-                <Phone className="w-12 h-12 text-muted-foreground" />
-              )}
-            </div>
+            {showEmailForm ? (
+              <div className="w-full flex flex-col gap-4">
+                <div className="flex items-center gap-2 text-primary">
+                  <Mail className="w-5 h-5" />
+                  <p className="font-medium">{t.emailTitle}</p>
+                </div>
+                <p className="text-sm text-muted-foreground">{t.emailDescription}</p>
+                <Input
+                  type="email"
+                  placeholder={t.emailPlaceholder}
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
+                  autoFocus
+                />
+                <Button
+                  onClick={handleEmailSubmit}
+                  disabled={!emailInput.trim() || emailSubmitting}
+                  className="w-full"
+                >
+                  {emailSubmitting ? "..." : t.emailSubmit}
+                </Button>
+              </div>
+            ) : (
+              <>
+                <div
+                  className={`w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    isConnected
+                      ? conversation.isSpeaking
+                        ? "bg-primary/20 ring-4 ring-primary/50 animate-pulse"
+                        : "bg-primary/10 ring-2 ring-primary/30"
+                      : "bg-muted"
+                  }`}
+                >
+                  {isConnected ? (
+                    conversation.isSpeaking ? (
+                      <Mic className="w-12 h-12 text-primary animate-pulse" />
+                    ) : (
+                      <MicOff className="w-12 h-12 text-muted-foreground" />
+                    )
+                  ) : (
+                    <Phone className="w-12 h-12 text-muted-foreground" />
+                  )}
+                </div>
 
-            <div className="text-center space-y-1">
-              <p className="font-medium">{form.name}</p>
-              <p className="text-sm text-muted-foreground">
-                {isConnecting
-                  ? t.connecting
-                  : isConnected
-                  ? conversation.isSpeaking
-                    ? t.agentSpeaking
-                    : t.listening
-                  : t.connecting}
-              </p>
-              {error && <p className="text-sm text-destructive">{error}</p>}
-            </div>
+                <div className="text-center space-y-1">
+                  <p className="font-medium">{form.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {isConnecting
+                      ? t.connecting
+                      : isConnected
+                      ? conversation.isSpeaking
+                        ? t.agentSpeaking
+                        : t.listening
+                      : t.connecting}
+                  </p>
+                  {error && <p className="text-sm text-destructive">{error}</p>}
+                </div>
+              </>
+            )}
 
             <Button
               size="lg"
