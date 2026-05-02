@@ -56,6 +56,7 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
   });
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const connectingRef = useRef(false);
 
   // Email form state
   const [showEmailForm, setShowEmailForm] = useState(false);
@@ -104,6 +105,7 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
       setError(null);
     },
     onDisconnect: () => {
+      connectingRef.current = false;
       setIsConnecting(false);
       setShowEmailForm(false);
       setStep("form");
@@ -146,6 +148,8 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
   }, [emailInput, pendingLead]);
 
   const startConversation = useCallback(async () => {
+    if (connectingRef.current) return;
+    connectingRef.current = true;
     setIsConnecting(true);
     setError(null);
 
@@ -164,11 +168,6 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
           ? selectedBusiness?.labelEs
           : selectedBusiness?.labelEn;
 
-      const firstMessage =
-        form.language === "es"
-          ? `¡Hola ${form.name}! Gracias por llamar a Konverxa. Veo que tienes un negocio de ${businessLabel ?? form.businessType} — cuéntame, ¿cómo gestionas actualmente las llamadas de tus clientes?`
-          : `Hello ${form.name}! Thanks for calling Konverxa. I see you're in the ${businessLabel ?? form.businessType} sector — tell me, how are you currently handling your customer calls?`;
-
       await conversation.startSession({
         signedUrl,
         connectionType: "websocket",
@@ -179,7 +178,6 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
         },
         overrides: {
           agent: {
-            firstMessage,
             language: form.language,
           },
         },
@@ -191,6 +189,7 @@ export function ElevenLabsAgent({ open, onOpenChange }: ElevenLabsAgentProps) {
         err instanceof Error ? err.message : "Failed to start conversation"
       );
       setIsConnecting(false);
+      connectingRef.current = false;
     }
   }, [conversation, form]);
 
